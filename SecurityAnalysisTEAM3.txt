@@ -1,0 +1,49 @@
+Security Analysis by Rule for team 3: 
+
+Rule Follows:
+
+MEM-51-CPP (generic)
+ - Delete is called on the pointer to the first element in the array, but also in a loop 
+ to free the memory throughout it.
+
+Rule Breaks:
+
+minesweeperTEAM3.cpp:235: error: MSC30-C: Do not use rand()
+minesweeperTEAM3.cpp:236: error: MSC30-C: Do not use rand()
+
+MEM-51-CPP (uninitizalized delete)
+ - on lines 410 - 415, delete is called on the 2d array used as the board. This is safe in itself, 
+ but if any of the allocations called with new above it failed, then delete() would be called on a 
+ variable not initialized with new, causing undefined behavior. New should be called in a try catch block.
+ 
+Security Analysis by rule for our code:
+
+Rules Followed:
+
+MEM51-CPP
+  - By using vectors that did not contain pointers, we properly
+      deallocated dynamically allocated resources (it does it automatically)
+      
+MEM57-CPP
+  - We avoided using the default operator "new" when creating an object
+
+
+Rule Breaks:
+
+
+MSC50-CPP (use of rand)
+
+minesweeper.cpp:206: error: MSC50-CPP 
+minesweeper.cpp:207: error: MSC50-CPP 
+
+- indexes for bombs are not truely random. Due to the use of rand
+
+MSC51-CPP (ensure rand are properly seeded)
+
+ - on line 203 we seed rand with srand(time(NULL))
+ while this might work normally if the attacker could control the system time
+ the attacker could change the seed to number of there choice. This could be 
+ fixed with the usage of std::random_dev as a srand seed.
+ 
+ 
+Point total: 210

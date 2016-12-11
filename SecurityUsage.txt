@@ -1,0 +1,28 @@
+Security Rules Used:
+
+ERR:
+
+ERR56-CPP x 2
+  - Made sure we handle people passing numbers too big and wrong number of args
+
+STR:
+
+N/A
+
+MEM:
+
+MEM51-CPP
+  - By using vectors that did not contain pointers, we properly
+      deallocated dynamically allocated resources (it does it automatically)
+
+MEM57-CPP
+  - We avoided using the default operator "new" when creating an object
+
+
+EXP:
+
+EXP53-CPP: Do not read uninitialized memory
+- We never read unintialized memory
+
+
+SCORE: 100
